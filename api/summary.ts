@@ -5,6 +5,7 @@ import { return200, return500 } from "../utils/response";
 
 interface ReturnShape {
   [tokenIds: string]: {
+    pair_address: string;
     price: string;
     base_volume: string;
     quote_volume: string;
@@ -18,10 +19,12 @@ export default async function (req: VercelRequest, res: VercelResponse): Promise
     const topPairs = await getTopPairs();
 
     const pairs = topPairs.reduce<ReturnShape>((accumulator, pair): ReturnShape => {
+      const pId = getAddress(pair.id);
       const t0Id = getAddress(pair.token0.id);
       const t1Id = getAddress(pair.token1.id);
 
       accumulator[`${t0Id}_${t1Id}`] = {
+        pair_address: pId,
         price: pair.price,
         base_volume: pair.volumeToken0,
         quote_volume: pair.volumeToken1,
