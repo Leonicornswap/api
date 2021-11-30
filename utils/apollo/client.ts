@@ -4,7 +4,7 @@ import fetch from "cross-fetch";
 export const client = new ApolloClient({
   link: new HttpLink({
     fetch,
-    uri: "https://api.thegraph.com/subgraphs/name/sniper365/leonicornswap",
+    uri: "https://api.thegraph.com/subgraphs/name/leonicornswap/exchange",
   }),
   cache: new InMemoryCache(),
 });
