@@ -18,14 +18,17 @@ export default async function (req: VercelRequest, res: VercelResponse): Promise
 
     const tokens = topPairs.reduce<ReturnShape>((accumulator, pair): ReturnShape => {
       for (const token of [pair.token0, pair.token1]) {
-        const tId = getAddress(token.id);
 
-        accumulator[tId] = {
-          name: token.name,
-          symbol: token.symbol,
-          price: token.derivedUSD,
-          price_BNB: token.derivedBNB,
-        };
+        if(token.derivedUSD>0){
+          const tId = getAddress(token.id);
+
+          accumulator[tId] = {
+            name: token.name,
+            symbol: token.symbol,
+            price: token.derivedUSD,
+            price_BNB: token.derivedBNB,
+          };
+        }
       }
 
       return accumulator;
